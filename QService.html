@@ -1,0 +1,68 @@
+<HTML>
+ <HEAD>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script>
+
+		var app = angular.module('myApp', []);
+
+		var myCallback=function($scope,$q,$interval){
+
+			$scope.card = "1234";
+			$scope.message = "";
+			$scope.errorMsg = "";
+			$scope.attempt = 0;
+			
+			$scope.verifyCard = function(card){
+				var deferred = $q.defer();
+				var i =0 ;
+				$interval(function(){
+					i++;
+					deferred.notify(i);
+					if(i==5){
+						if (card == '1234') {
+							deferred.resolve('Card No ' + card + ' is valid');
+						}
+						else {
+							deferred.reject('Card No ' + card + ' is invalid' );
+						}
+					}
+				},1000,5);
+				return deferred.promise;
+			}
+			
+			$scope.success = function(response){
+				$scope.message =  response;
+			}
+
+			$scope.error = function(response){
+				$scope.errorMsg =  response;
+			}
+
+			$scope.notify = function(response){
+				$scope.attempt =  response;
+			}
+
+			$scope.gateway = function(){
+				$scope.message = "";
+				$scope.errorMsg = "";
+				$scope.attempt = 0;
+				var promiseObj = $scope.verifyCard($scope.card);
+				promiseObj.then($scope.success,$scope.error,$scope.notify);
+			}
+		}
+		app.controller('myCtl',myCallback);
+	</script>
+ </HEAD>
+ <BODY ng-app="myApp" ng-controller="myCtl"> 
+	<H1>Verify Card No - $q, defer, promise</H1>
+	
+	<H2>Try {{attempt}} ... <H2>
+	<H3 style="color:green">{{message}}</H3>
+	<H3 style="color:red">{{errorMsg}}</H3>
+	Card No <input type=text ng-model="card" >
+	<button ng-click="gateway()">Verify Card</button>
+
+	<hr>
+	<h4>Above example makes an asynchronous call to payment server and verifies card number. It makes 5 attempts. In each attempt it notifies to promise object.  In 5th attempt it verifies card number and either resolves the promise or rejects promise.</h4>
+ </BODY>
+</HTML>

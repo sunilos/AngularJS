@@ -1,0 +1,32 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script>
+var app = angular.module('myApp', []);
+var ctlObj = function($scope) {
+    $scope.n1= 5;
+    $scope.n2= 10;
+	$scope.total= 0;
+    $scope.calculate= function (){
+		$scope.total = parseInt($scope.n1) + parseInt($scope.n2);
+	}
+}
+app.controller('myCtl',ctlObj);
+</script>
+
+<body>
+
+<div ng-app="myApp" >
+	<form ng-controller="myCtl">
+	  Num #1: <input type="text" ng-model="n1"> + 
+	  Num #2 : <input type="text" ng-model="n2"> = {{total}} </span> <BR>
+	  <input value="Calulate" type="button" ng-click="calculate()">
+	<form>
+</div>
+
+
+
+</body>
+</html> 

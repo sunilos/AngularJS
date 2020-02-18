@@ -1,0 +1,35 @@
+<HTML>
+ <HEAD>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script>
+
+		var app = angular.module('myApp', []);
+
+
+		var myCallback=function($scope){
+			$scope.money = 0;
+			$scope.message = "Need minimum Rs 100 to buy pizza";
+			$scope.buy = function(){
+			    try{
+				    var i = 100/0;
+					if($scope.money < 100){ 
+						throw "You can NOT buy Pizza";
+					}
+					$scope.message = "Wow you can buy pizza!!" ;
+				}catch(err){
+					$scope.message = err;
+				}finally{
+					alert('This is finally');
+				}
+			};
+		};
+		app.controller('myCtl',myCallback);
+	</script>
+ </HEAD>
+ <BODY ng-app="myApp" ng-controller="myCtl"> 
+	<H1>Exception Handling </H1>
+	<H3>{{message}}</H3>
+	<INPUT TYPE="text" ng-model="money">
+	<button ng-click="buy()" >Buy Pizza</button>
+ </BODY>
+</HTML>

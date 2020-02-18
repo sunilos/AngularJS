@@ -1,0 +1,52 @@
+<HTML>
+ <HEAD>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script>
+
+		var app = angular.module('myApp', []);
+
+		var custCB=function($scope,$http){
+
+			//Customer form 
+			$scope.form= {};
+
+			//Function called when request is successfully executed
+			$scope.success= function(res) {
+				$scope.form = res.data;
+				console.log(res) ;
+			}
+
+			//Function called when request is failed
+			$scope.fail= function(res) {
+				$scope.message = "Error:" + res.status + "," + res.statusText ;
+			}
+
+			$scope.display = function () {
+			    var url = "/customer/get/1"
+				var promise = $http.get(url);
+				promise.then($scope.success,$scope.fail);
+			}
+
+			$scope.submit = function () {
+			    var url = "/customer/save"
+				var promise = $http.post(url,$scope.form);
+				promise.then($scope.success,$scope.fail);
+			}
+ 		}
+
+		app.controller('custCtl',custCB);
+	</script>
+ </HEAD>
+
+ <BODY ng-app="myApp" > 
+	<H1>Customer</H1>  
+	<FORM name="frm" ng-controller="custCtl" >
+		<b>{{message}}</b><br>
+		Name: <INPUT  ng-model="form.name" > <br>
+		Address: <INPUT ng-model="form.address" > <br>
+		<button ng-click="submit()"> Save</button>
+		<hr>
+		form : {{form}}
+	</FORM>
+  </BODY>
+</HTML>

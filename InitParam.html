@@ -1,0 +1,21 @@
+<html >
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body>
+  <div ng-app=""  ng-init="name='Ram';age=16;price=99.99" >
+    
+    <H1>Initialize Param and Apply Filter</H1>
+    <p>Name : <input type="text" ng-model="name"></p>
+    <p>Age : <input type="text" ng-model="age"></p>
+    
+    <HR>
+    <H1>Filters</H1>
+    Name Original : {{name}} <br>
+    Name in upper : {{name|uppercase}}<br>
+    Name in Lower : {{name|lowercase}}<br>
+    Price: {{price}}<br>
+    Price: {{price|currency}}<br>
+  </div>
+</body>
+</html> 

@@ -1,0 +1,56 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script>
+var app = angular.module('myApp', []);
+
+app.service('MathService', function(){
+   this.add = function(a,b) {
+      return a+b;
+   };
+   this.getNum = function(val) {
+      return parseInt(val);
+   }
+});
+
+app.factory('MathFactory', function() {    
+	 var factory = {}; 
+	 factory.max = function(a, b){
+	    return (a>b)?a:b;
+	 }
+	 return factory;
+});
+
+var ctlObj = function($scope,MathService,MathFactory) {
+
+	$scope.n1= 5;
+    $scope.n2= 10;
+	$scope.total= 0;
+	$scope.max= 0;
+
+    $scope.calculate= function(){
+		var num1 = MathService.getNum($scope.n1);
+		var num2 = MathService.getNum($scope.n2);
+		$scope.total =MathService.add(num1,num2);
+		$scope.max =MathFactory.max(num1,num2); 
+	}
+}
+app.controller('myCtl',ctlObj);
+
+</script>
+
+<body>
+
+<div ng-app="myApp" >
+	<form ng-controller="myCtl">
+	  <B>Num #1:</B> <input type="number" ng-model="n1"><br>
+	  <B>Num #2:</B> <input type="number" ng-model="n2"><br>
+	  <B>Total:</B> = {{total}} <br>
+	  <B>Max :</B> = {{max}} <br>
+	  <input value="Calulate" type="button" ng-click="calculate()">
+	<form>
+</div>
+</body>
+</html> 

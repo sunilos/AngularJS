@@ -1,0 +1,39 @@
+<!--
+This page contains example of following angular directives:
+
+ng-disabled: disables the control.
+ng-show: shows the control.
+ng-hide: hides the control.
+ng-click: listen on click event.
+
+Page shows, hides, and disables html nodes on the basis of check box value changes.
+
+-->
+
+<html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<body>
+	<div ng-app="" >
+
+	  <INPUT type="checkbox" ng-model='uploadPhoto'> Upload Photo <BR>
+	  <INPUT type="file" ng-show="uploadPhoto"> 
+	  <HR>
+
+	  Cash Payment <INPUT type="checkbox" ng-model='payCash'> 
+	  Enter CC No <INPUT type="text" ng-disabled="payCash"> 
+	  <button ng-disabled="payCash==true">Click Me</button>
+
+	  
+	  <HR>
+	  Cash On Delivery <INPUT type="checkbox" ng-model='cod'> 
+	  <select ng-hide="cod">
+	    <option>Netbanking</option>
+	  	<option>Credit Card Payment</option>
+	  	<option>Debit Card Payment</option>
+	  </select>
+
+	</div>
+</body>
+</html> 

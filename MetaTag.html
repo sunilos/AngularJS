@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head ng-controller='MetaCtl'>
+
+	<meta name="title" content="{{facbookmeta.title}}" />
+	<meta name="description" content="{{facbookmeta.desc}}" />
+	<meta name="image" content="{{facbookmeta.image}}" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+	<script lang="javascript">
+
+		var app = angular.module('myApp', []);
+
+		app.service('SocialMediaService', function () {
+
+			this.facbookmeta = {};
+
+			this.setFacbook = function (t, d, i) {
+				this.facbookmeta.title = t;
+				this.facbookmeta.desc = d;
+				this.facbookmeta.image = i;
+			};
+
+			this.twittermeta = {};
+			this.settwitter = function (t, d, i) {
+				this.twittermeta.title = t;
+				this.twittermeta.desc = d;
+				this.twittermeta.image = i;
+				console.log(this.facbookmeta);
+
+			}
+		});
+
+		app.controller('MetaCtl', function ($scope, SocialMediaService) {
+			
+			$scope.facbookmeta = {};
+
+			$scope.$watch(function () {
+				return SocialMediaService.facbookmeta;
+			},
+				function (newVal, oldVal) {
+					$scope.facbookmeta = SocialMediaService.facbookmeta;
+				}
+			);
+		});
+
+		app.controller('SharePageCtl', function ($scope, SocialMediaService) {
+
+			$scope.form = {};
+			
+			$scope.changeVal = function () {
+				SocialMediaService.setFacbook($scope.form.title, $scope.form.desc, $scope.form.img);
+			};
+
+			$scope.seeMetaTag = function () {
+				var metas = document.getElementsByTagName('meta');
+				for (var i = 0; i < metas.length; i++) {
+					alert(metas[i].getAttribute("content"));
+				}
+			}
+		});
+
+	</script>
+</head>
+
+<body>
+	<div ng-controller='MetaCtl'>
+		Meta {{facbookmeta}}
+	</div>
+	<hr>
+	<div ng-controller="SharePageCtl">
+		Title:
+		<INPUT type="text" ng-model='form.title'> <br> Description :
+		<INPUT type="text" ng-model='form.desc'> <br> Image:
+		<INPUT type="text" ng-model='form.img'> <br>
+		<button ng-click="changeVal()">Click Me</button>
+		<hr>
+		<button ng-click="seeMetaTag()">See Meta</button>
+	</div>
+</body>
+
+</html>

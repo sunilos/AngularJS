@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script >
+
+	var app = angular.module('myApp', []);
+
+	app.directive('fileModel',function($parse){
+			//function is linked with directive element to get element info. 
+			//It is called only once.
+			function linkFunc(scope,element, attrs){
+				var fileGet = $parse(attrs.fileModel);//Getter
+				var fileSet = fileGet.assign;//Setter
+                element.bind('change',function(event){ //listen onChange event
+                    scope.$apply(function(){
+                        fileSet(scope,element[0].files[0]);
+                    });
+                });
+            };
+            return {
+				restrict: 'A',
+                link:linkFunc 
+            }
+     });
+
+	var ctlObj=	function($scope,$http){
+
+		//Contains form elements 
+		$scope.form = {};
+
+		//Contains file elements
+		$scope.files = {};
+
+		//Process successful response
+		$scope.success = function (res){
+			alert("success" + res);
+		}
+
+		//Process error response
+		$scope.fail = function (err){
+			alert("Fail" + JSON.stringify(err));
+		}
+
+		//Submit form
+		$scope.submit = function (){
+
+			var fd = new FormData(); //Multipart form object
+			//Add form data one by one
+			//fd.append("name", $scope.form.name);
+			//fd.append("address", $scope.form.address);
+			//fd.append("photo", $scope.files.photo);
+			//fd.append("id", $scope.files.id);
+
+			//Add form data by iterator 
+			//Append form data 
+			angular.forEach($scope.form, function (value, key) {
+				fd.append(key, value);
+			});
+
+			//Append files
+			angular.forEach($scope.files, function (value, key) {
+				fd.append(key, value);
+			});
+
+			var url = '/api/fileupload/'; //End point 
+			var config = {headers:{'Content-Type': undefined }}; //define content of request
+			var promise = $http.post(url,fd,config);//Send Multipart form 
+			promise.then( $scope.success,$scope.fail); 
+        }
+	}
+	app.controller('parseCtl',ctlObj);
+
+</script>
+</HEAD>
+
+<BODY ng-app="myApp" >
+
+	<H1>Personal Details </H1> 
+    <div ng-controller="parseCtl" >	    
+		Name: <input ng-model="form.name" ><br>
+		Address: <input ng-model= "form.address"><br>
+		Photo: <input type="file" file-model="files.photo"/>   <br>
+		ID Card: <input type="file" file-model="files.id"/> <br>
+		<button ng-click="submit()">Save</button>  
+		<hr>
+		Files: {{files}} <br>
+		Form : {{form}}
+    </div>
+</BODY>
+</HTML>

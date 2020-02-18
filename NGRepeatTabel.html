@@ -1,0 +1,31 @@
+<!-- 
+Example initializes an object array 'persons'.
+ng-repeat iterates persons array and creates table row for each element.
+ng-repeat provides three properties $index, $even and $odd.
+Even and odd rows of tables are printed in different background colors 
+-->
+<html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<body>
+	<H1>Person List</H1>
+	<div ng-app="" ng-init="persons=[{name:'Ram',age:16},{name:'Shyam',age:17},{name:'Amit',age:18}]" >
+		<TABLE border=1>
+		   	<TR>
+				<TH>#</TH>
+				<TH>Name</TH>
+				<TH>Age</TH>
+			<TR>
+			<TR ng-repeat="p in persons"  >
+				<TD ng-if="$odd" >{{$index +1 }}</TD>
+				<TD ng-if="$odd" >{{p.name}}</TD>
+				<TD ng-if="$odd" >{{p.age}}</TD>
+				<TD ng-if="$even" style="background-color:#f1f1f1" >{{$index +1 }}</TD>
+				<TD ng-if="$even" style="background-color:#f1f1f1" >{{p.name}}</TD>
+				<TD ng-if="$even" style="background-color:#f1f1f1" >{{p.age}}</TD>
+			</TR>
+		</TABLE>
+	</div>
+</body>
+</html> 

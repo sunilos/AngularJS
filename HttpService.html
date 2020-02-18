@@ -1,0 +1,119 @@
+<HTML>
+ <HEAD>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script>
+		var app = angular.module('myApp', []);
+
+
+		app.config(function($httpProvider, $provide){
+			//Enable cache for all http requests. Only GET and JSONP responses are cached 
+			$httpProvider.defaults.cache = true;
+
+			// alternatively, register the interceptor via an anonymous factory
+			$httpProvider.interceptors.push(function($q) {
+			  return {
+			   'request': function(config) {
+				   alert('Sending reuqest');
+				   return config;
+				},
+			   'requestError': function(rejection) {
+				   return rejection;
+				},
+				'response': function(response) {
+				    alert('Got response');
+					return response;
+				},
+				'responseError': function(rejection) {
+					return rejection;
+				}
+
+			  };
+			});
+
+		});
+
+		app.service('SumService',function(){
+		  this.sum = function(a,b){
+			return a + b;
+		  }
+		});
+/*
+		app.decorator('SumService', function SumServiceDecorator($delegate){
+		    var oSum = $delegate.sum;
+			$delegate.sum = function(a,b){
+				a += 100;
+				return 	oSum(a,b);
+			}
+		});
+  */
+
+		var myCallback=function($scope,$http,SumService){
+
+			//Respone data
+			$scope.res = {};
+			$scope.data = {};
+			$scope.config = {};
+			$scope.headers = {};
+			$scope.status = 0;
+			$scope.statusText = "";
+
+			//List of users 
+			$scope.users = {};
+
+			//Function called when request is successfully executed
+			$scope.successRes= function(response) {
+
+				$scope.res = response;
+				$scope.config = response.config; //Request configuration 
+				$scope.headers = response.config.headers; //Request headers
+				$scope.status = response.status; //Satus code of request
+				$scope.statusText = response.statusText; //Status message
+				$scope.data = response.data; //Actual server response
+
+				$scope.users = response.data.list; 
+			}
+
+			//Function called when request is failed
+			$scope.failRes= function(response) {
+				$scope.res = response;
+				$scope.status = response.status;
+			}
+
+			//Make ajax call and gets list of users 
+			$scope.getUsers = function () {
+				alert(SumService.sum(5,10));
+				$http.get("UserList.json").then($scope.successRes,$scope.failRes);
+            }
+ 		}
+
+		//My controller
+		app.controller('myCtl',myCallback);
+
+
+
+
+
+	</script>
+ </HEAD>
+
+ <BODY ng-app="myApp" ng-controller="myCtl"> 
+	<H1>$http Service</H1>
+    <button ng-click="getUsers()">Get List</button>
+	<table border="1">
+	 <tr><th>ID</th><th>Name</th><th>City</th></tr>
+	 <tr ng-repeat="u in users" >
+		<td>{{u.id}}</td><td>{{u.name}}</td><td>{{u.city}}</td>
+	 </tr>
+	</table>
+	<hr>
+	<table border=1>
+	 <caption>Respone Object</caption>
+	 <tr><td nowrap>Response Object</td><td>{{res}}</td></tr>
+   	 <tr><td>Request Config</td><td>{{config}}</td></tr>
+	 <tr><td>Data</td><td>{{data}}</td></tr>
+	 <tr><td>Headers</td><td>{{headers}}</td></tr>
+	 <tr><td>Status Code</td><td>{{status}}</td></tr>
+	 <tr><td>Status Text</td><td>{{statusText}}</td></tr>
+	</table>
+ </BODY>
+</HTML>

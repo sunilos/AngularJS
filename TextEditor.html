@@ -1,0 +1,32 @@
+<HTML>
+ <HEAD>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.16/textAngular.min.js"></script>
+	
+	<script>
+		var app = angular.module('myApp', ['textAngular']);
+		var myCallback=function($scope,$timeout,$interval){
+			$scope.message = "Rays Tehnologies!";
+
+			$timeout(function() { //change messages after 2 seconds 
+				$scope.message = "SunilOS Open Source Learning Center!";
+			}, 2000);
+
+			$scope.timestamp = new Date().toLocaleTimeString();
+			//update timestamp every after 1 sec 
+			$interval(function() {
+				$scope.timestamp = new Date().toLocaleTimeString();
+			}, 1000);
+		}
+		app.controller('myCtl',myCallback);
+	</script>
+ </HEAD>
+ <BODY ng-app="myApp" ng-controller="myCtl"> 
+	<H1>$timeout  Service</H1> 
+	<H2>{{message}}</H2>
+	<hr>
+	<H1>$interval  Service</H1> 
+	<H2>{{timestamp}}</H2>
+
+ </BODY>
+</HTML>

@@ -1,0 +1,104 @@
+<!--
+Example demonstrates, how to create watch on 
+	(1) Variable 
+	(2) Values of service
+It demonstrate that if one controller raise an error then common error controller can display a message
+-->
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script>
+	var app = angular.module('myApp', []);
+
+	//Service contains error code
+	app.service('ErrorService', function(){
+	   self = this;
+	   self.code =0;
+	   self.setCode = function(c){
+		  self.code = c;
+	   };
+	   self.getCode = function(c){
+		  return self.code;
+	   };
+	});
+	
+	//Watch controller
+	var watchCB = function($scope,ErrorService) {
+		$scope.message= "";
+		$scope.age= "";
+		$scope.price= "";
+
+		//Create watch on age variable
+		$scope.$watch( 'age',
+			function(newVal,oldVal){
+				$scope.message = "Age changed from " + oldVal + " to " + newVal;
+			}
+		);
+	   	//create watch on price variable
+		$scope.$watch( 
+			function(scope){ 
+				return scope.price; 
+			},
+			function(newVal,oldVal){
+				$scope.message = "Price changed from " + oldVal + " to " + newVal;			
+			}
+		);
+
+	    //Raise an exception and set error code in ErroService
+		$scope.setError = function(){
+			ErrorService.setCode($scope.age);
+		}
+	}
+	app.controller('watchCtl',watchCB);
+
+	/**
+	Error controller, creates watch on ErrorService value. 
+	If error code is changed in ErrorService 
+	then controller shows error message 
+	*/   
+	var errorCB = function($scope,ErrorService) {
+		$scope.errorMsg= "";
+		$scope.errorShow= false;
+
+		$scope.reset= function(){
+			$scope.errorShow= false;
+		}
+		/*
+		Creates watch on ErrorService.getCode() value.
+		If an error in any controller then displays error message.
+		*/
+		$scope.$watch( 
+			function(){ 
+				return ErrorService.getCode(); 
+			},
+			function(newVal,oldVal){
+				$scope.errorMsg = "Error: " + newVal;			
+				$scope.errorShow = true;
+			}
+		);
+	}
+	app.controller('errorCtl',errorCB);
+
+</script>
+
+<body ng-app="myApp" >
+
+<div ng-controller="errorCtl" ng-show="errorShow"  >
+<table width="100%" style="background-color:yellow">
+	<tr>							
+		<td>{{errorMsg}}</td>
+		<td align="right"><button  ng-click="reset()">X</button></td>
+	</tr>
+</table>
+</div>
+
+<div ng-controller="watchCtl">
+	<h1>$scope.$watch function </h1>
+	Age :<input type="number" ng-model="age" ><br>
+	Price: <input type="number" ng-model="price" >
+	<button  ng-click="setError()">Throw Error</button>
+	<hr>
+	<h2>{{message}}</h2>
+</div>
+</body>
+</html> 

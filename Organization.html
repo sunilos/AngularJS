@@ -1,0 +1,58 @@
+<!--
+Example performs angular form validations. 
+1) It enables submit button only when form is valid 
+2) It shows input validation error messages  
+-->
+<HTML>
+ <HEAD>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script>
+		var app = angular.module('myApp', []);
+		var empCallback=function($scope){
+			$scope.message="" ;
+			$scope.submit= function() {
+				$scope.message="Data is successfully saved" ;
+			};
+		}
+		app.controller('employeeCtl',empCallback);
+	</script>
+ </HEAD>
+ <BODY ng-app="myApp" ng-controller="employeeCtl"> 
+
+   <H1>Organization</H1> 
+   <p style="color:green">{{message}} </p>
+   <FORM name="orgForm"  novalidate >
+
+	<b>Name</b> 
+	<INPUT TYPE="text" NAME="name" ng-model="name" required >
+	<span style = "color:red" ng-show = "orgForm.name.$dirty && orgForm.name.$invalid">
+		<span ng-show = "orgForm.name.$error.required">Name is required</span>
+	</span>
+	<br>
+	<b>Phone<b>
+	<INPUT TYPE="text" NAME="phone"  ng-model="phone" required  maxlength="10"> 
+	<span style = "color:red" ng-show = "orgForm.phone.$dirty && orgForm.phone.$invalid">
+		<span ng-show = "orgForm.phone.$error.required">Phone is required</span>
+	</span>
+	<br>
+	<b>Email<b> 
+	<INPUT TYPE="email" NAME="email" ng-model="email" required > 
+	<span style = "color:red" ng-show = "orgForm.email.$dirty && orgForm.email.$invalid">
+		<span ng-show = "orgForm.email.$error.required">Email is required</span>
+		<span ng-show = "orgForm.email.$error.email">Invalid email </span>
+	</span>
+	<br>
+	<b>URL<b> 
+	<INPUT TYPE="url" NAME="url" ng-model="url"  required > 
+	<span style = "color:red" ng-show = "orgForm.url.$dirty && orgForm.url.$invalid">
+		<span ng-show = "orgForm.url.$error.required">Url is required</span>
+		<span ng-show = "orgForm.url.$error.url">Invalid url</span>
+	</span>
+	<br>
+
+	<button ng-disabled="orgForm.$invalid"  ng-click="submit()" >Submit</button>
+
+   </FORM>
+
+ </BODY>
+</HTML>

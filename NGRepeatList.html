@@ -1,0 +1,19 @@
+<!--
+ng-repeat iterates array and create list elements
+-->
+
+<html >
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body>
+	<H1>Name List </H1>
+
+	<div ng-app=""  ng-init="names=['Ram','Shyam','Amit']" >
+		<OL>
+		  <LI ng-repeat="nm in names" >	{{nm}} </LI>
+		</OL>
+	</div>
+	<HR>
+</body>
+</html> 

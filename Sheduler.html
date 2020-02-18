@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script >
+	var app = angular.module('myApp', []);
+
+	var ctlObj=	function($scope,$http, $timeout,$window){
+	    self = this;
+		self.delay = 5000;
+		self.counter = 0;
+		self.landingUrl = "Login"
+
+		self.checkSession = function() {
+		    //call $http 
+			self.counter += 1;
+			if(self.counter==2){
+			    alert("session timeout")
+				$window.open(self.landingUrl, "_self");
+			}else{
+				$timeout(self.checkSession, self.delay )
+			}
+		};
+
+		$timeout(self.checkSession, self.delay )
+	}
+	app.controller('schedulerCtl',ctlObj);
+
+</script>
+</HEAD>
+
+<BODY >
+	<DIV ng-app="myApp" ng-controller="schedulerCtl as ctl" >
+		<H1>{{ctl.counter}}</H1>  
+	</DIV>
+</BODY>
+</HTML>

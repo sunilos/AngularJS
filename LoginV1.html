@@ -1,0 +1,41 @@
+<!--Best practices avoid using $scope object-->
+<HTML>
+<HEAD>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script >
+	var app = angular.module('myApp', []);
+	var ctlObj=	function(){
+
+	     self = this;
+		 self.message = "";
+		 self.loginId = "";
+		 self.password = "";
+		 self.signin = function() {
+			if('admin' ==  self.loginId && 'admin' ==  self.password){
+				 self.message = 'Login is successful';
+			}else{
+				 self.message = 'Invalid ID or Password';
+			}
+		};
+	}
+
+	app.controller('loginCtl',ctlObj);
+
+</script>
+</HEAD>
+
+<BODY >
+	<DIV ng-app="myApp" >
+
+		<H1>Login</H1>  
+		<FORM ng-controller="loginCtl as ctl"  >
+		    <p style="color:red" ng-bind="ctl.message" ></p>
+			Login: <INPUT TYPE="text" ng-model="ctl.loginId"> <BR>
+			Password: <INPUT TYPE="text" ng-model="ctl.password"> <BR>
+			<INPUT TYPE="button" value="SignIn" ng-click="ctl.signin()">
+		</FORM>
+	</DIV>
+</BODY>
+</HTML>

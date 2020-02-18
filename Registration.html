@@ -1,0 +1,132 @@
+<!--This page contains three HTML forms 
+1) Login 
+2) New User 
+3) Forgot Password
+This is the example of ng-show and ng-hide directives.	
+Different form is displayed on the basis of model attribute 'page'.
+Different links are hidden on the basis of model attribute 'page'. 
+-->
+
+<HTML>
+<HEAD>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script >
+	var app = angular.module('myApp', []);
+	var ctlObj=	function($scope){
+		$scope.message = "";
+		$scope.loginId = "";
+		$scope.password = "";
+		$scope.submit = function() {
+			if('admin' == $scope.loginId && 'admin' == $scope.password){
+				$scope.message = 'Login is successful';
+			}else{
+				$scope.message = 'Invalid ID or Password';
+			}
+		};
+	}
+	app.controller('loginCtl',ctlObj);
+
+	var registrationCtlObj=	function($scope){
+		$scope.message = "";
+		$scope.name = "";
+		$scope.loginId = "";
+		$scope.password = "";
+		$scope.submit = function(){
+			$scope.message ='Congratulations '+ $scope.name 
+			+ ' you have been successfully registered';
+		};
+	}
+	app.controller('registrationCtl',registrationCtlObj);
+
+
+	var forgotPassordCtlObj=function($scope){
+		$scope.message= "";
+		$scope.loginId = "";
+		$scope.submit = function() {
+			$scope.message ="Your password is sent to your registered email id!"		
+		};
+	}
+	app.controller('forgotPasswordCtl',forgotPassordCtlObj);
+
+</script>
+</HEAD>
+
+<BODY ng-app="myApp" ng-init="page='L'">
+
+	<DIV ng-show="page=='L'">
+		<H1>Login</H1>  
+		<FORM ng-controller="loginCtl"  >
+			<TABLE  frame="box">
+			<TR>
+				<TD colspan=2 style="color:red" ng-bind="message"></TD>
+			</TR>
+			<TR>
+				<TD>Login</TD>
+				<TD><INPUT TYPE="text" ng-model="loginId"></TD>
+			</TR>
+			<TR>
+				<TD>Password</TD>
+				<TD><INPUT TYPE="password" ng-model="password"></TD>
+			</TR>
+			<TR>
+				<TD colspan=2 align="right">
+					<INPUT TYPE="button" value="SignIn" ng-click="submit()">
+				</TD>
+			</TR>
+			</TABLE>
+		</FORM>
+	</DIV>
+	<DIV ng-show="page=='N'" >
+		<H1>New User</H1>  
+   		<FORM ng-controller="registrationCtl" >
+			<TABLE  frame="box">
+			<TR>
+				<TD colspan=2 style="color:green" ng-bind="message"></TD>
+			</TR>
+			<TR>
+				<TD>Name</TD>
+				<TD><INPUT TYPE="text" ng-model="name"></TD>
+			</TR>
+			<TR>
+				<TD>Login</TD>
+				<TD><INPUT TYPE="text" ng-model="loginId"></TD>
+			</TR>
+			<TR>
+				<TD>Password</TD>
+				<TD><INPUT TYPE="password" ng-model="password"></TD>
+			</TR>
+			<TR>
+				<TD colspan=2 align="right">
+					<INPUT TYPE="button" value="SignUp" ng-click="submit()">
+				</TD>
+			</TR>
+			</TABLE>
+		</FORM>
+	</DIV>
+	<DIV ng-show="page=='F'" >
+		<H1>Forgot Password</H1>  
+   		<FORM ng-controller="forgotPasswordCtl" >
+			<TABLE  frame="box">
+			<TR>
+				<TD colspan=2 style="color:green" ng-bind="message"></TD>
+			</TR>
+			<TR>
+				<TD>Login Id:</TD>
+				<TD><INPUT TYPE="text" ng-model="loginId"></TD>
+			</TR>
+			<TR>
+				<TD colspan=2 align="right">
+					<INPUT TYPE="button" value="Reset" ng-click="submit()">
+				</TD>
+			</TR>
+			</TABLE>
+		</FORM>
+	</DIV>
+	<a href="" ng-click="page='L'" ng-hide="page=='L'" >| Login</a> 
+	<a href="" ng-click="page='N'" ng-hide="page=='N'" >| New User</a> 
+	<a href="" ng-click="page='F'" ng-hide="page=='F'" >| Forgot Password</a> 
+
+</BODY>
+</HTML>

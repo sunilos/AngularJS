@@ -1,0 +1,29 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script>
+	var app = angular.module('myApp', []);
+	
+	app.value("NCS","IT Park");	
+
+	app.constant("orgInfo",{	
+			name: "SunilOS", 
+			detail:"Open Source Learning Center",  
+			address:"President Tower, Indore"
+		}
+	);
+	var ctlObj = function($scope,orgInfo) {
+		$scope.name= orgInfo.name;
+		$scope.detail= orgInfo.detail;
+		$scope.address= orgInfo.address;
+	}
+	app.controller('myCtl',ctlObj);
+</script>
+
+<body ng-app="myApp" ng-controller="myCtl">
+	<h1>Contants, Organization Info</h1>
+	<h2>{{name}}</h2>
+	<h3>{{detail}}</h3>
+	<h4>{{address}}</h4>
+</body>
+</html> 

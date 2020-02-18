@@ -1,0 +1,29 @@
+<HTML>
+ <HEAD>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script>
+		var app = angular.module('myApp', []);
+		var myCallback=function($scope,$window){
+			$scope.displayAlert = function () {
+                $window.alert("You have clicked me!");
+            }
+            $scope.displayPrompt = function () {
+                var name = $window.prompt('Enter Your Name');
+                $window.alert('Hello ' + name);
+            }
+            $scope.delete= function () {
+                var answer = $window.confirm('Are you sure ?');
+                $window.alert(answer);
+            }
+		}
+		app.controller('myCtl',myCallback);
+	</script>
+ </HEAD>
+
+ <BODY ng-app="myApp" ng-controller="myCtl"> 
+	<H1>Service $window</H1>
+    <button ng-click="displayAlert()">Click Me</button>
+    <button ng-click="displayPrompt()">Enter your name</button>
+    <button ng-click="delete()">Delete</button> 
+ </BODY>
+</HTML>

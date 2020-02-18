@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script >
+	var app = angular.module('myApp', []);
+	var ctlObj=	function($scope){
+		$scope.name = "";
+		$scope.email = "";
+		$scope.password = "";
+		$scope.submit = function() {
+		};
+	}
+	app.controller('loginCtl',ctlObj);
+
+</script>
+</HEAD>
+
+<BODY >
+	<DIV ng-app="myApp" >
+		<H1>Registration</H1>  
+		<FORM ng-controller="loginCtl" name="frm" novalidate>
+			Name : <INPUT TYPE="text" name="name"  ng-model="name" required > 
+				   <span style = "color:red" 
+				    ng-show = "frm.name.$dirty && frm.name.$error.required">
+					First Name is required.</span>	
+			<br>
+			Email : <INPUT TYPE="text" name="email" ng-model="email" required > 
+				   <span style = "color:red" 
+					ng-show = "frm.email.$dirty && frm.email.$error.required">
+					Email is required.</span>	
+			<br>
+			<button 
+				ng-disabled = "frm.$invalid" 
+				ng-click="submit()">Sign Up</button>
+              
+		</FORM>
+	</DIV>
+</BODY>
+</HTML>

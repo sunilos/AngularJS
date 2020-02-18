@@ -1,0 +1,15 @@
+<!-- Customer form displayed in ng-view-->
+<DIV >
+	<H1>Customer</H1>  
+	<FORM name="frm">
+		<p style="color:green" ng-bind="message" ></p>
+
+		Name: <INPUT TYPE="text" ng-model="form.name" required> <BR>
+		Address: <INPUT TYPE="text" ng-model="form.address" required> <BR>
+		<button ng-click="submit()" ng-disabled="frm.$invalid" >Submit</button>
+		<button ng-click="submitAndGo()">Account</button>
+
+		<br>
+		form : {{form}}
+	</FORM>
+</DIV>

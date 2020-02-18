@@ -1,0 +1,16 @@
+<!-- Account form displayed in ng-view-->
+<DIV >
+	<H1>Account</H1>  
+	<FORM name="frm" >
+		<p style="color:green" ng-bind="message" ></p>
+
+		AC Number: <INPUT TYPE="text" ng-model="form.number" required> <BR>
+		Balance: <INPUT TYPE="number" ng-model="form.balance" required> <BR>
+		
+		<button ng-click="submit()" ng-disabled="frm.$invalid">Submit</button>
+		<button ng-click="submitAndGo()">Loan</button>
+		
+		<br>
+		form : {{form}}
+	</FORM>
+</DIV>

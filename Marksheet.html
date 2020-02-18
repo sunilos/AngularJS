@@ -1,0 +1,60 @@
+<HTML>
+<HEAD>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script >
+	var app = angular.module('myApp', []);
+
+	var ctlCB=	function($scope, $http){
+		$scope.message = "";
+		$scope.mForm = {};
+
+		//Function called when request is successfully executed
+		$scope.successRes= function(response) {
+			$scope.mForm = response.data; //Actual server response
+			alert('Got message');
+		}
+
+		//Function called when request is failed
+		$scope.failRes= function(response) {
+			$scope.message = "Server Error: " + response.statusText;
+		}
+
+		$scope.display = function() {
+			$http.get("Marksheet.json").then($scope.successRes,$scope.failRes);
+		};
+
+		$scope.submit = function() {
+			var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+			$http.post("Marksheet.json?1=1",$scope.mForm).then($scope.successRes,$scope.failRes);
+			$scope.message = "Data submitted ";
+		};
+
+		$scope.display();
+	}
+	app.controller('mCtl',ctlCB);
+
+</script>
+</HEAD>
+
+<BODY ng-app="myApp" ng-controller="mCtl" >
+	<H1>Login</H1>  
+	<FORM>
+		<p style="color:red" ng-bind="message" ></p>
+		Roll No: <INPUT TYPE="text" ng-model="mForm.rollNo"> <BR>
+		Name: <INPUT TYPE="text" ng-model="mForm.name"> <BR>
+		Physics: <INPUT TYPE="number" ng-model="mForm.physics"> <BR>
+		Chemistry: <INPUT TYPE="number" ng-model="mForm.chemistry"> <BR>
+		Maths: <INPUT TYPE="number" ng-model="mForm.maths"> <BR>
+		<INPUT TYPE="button" value="Save" ng-click="submit()">
+		<INPUT TYPE="button" value="Get" ng-click="display()">
+
+	</FORM>
+	{{mForm}}
+</BODY>
+</HTML>

@@ -1,0 +1,21 @@
+<HTML>
+ <HEAD>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script>
+		var app = angular.module('myApp', []);
+
+		var myCallback=function($scope,$log){
+			$log.log('This is log');
+			$log.debug('This is debug message');
+			$log.info('This is information');
+			$log.warn('This is warning');
+			$log.error('This is error');
+		}
+		app.controller('myCtl',myCallback);
+	</script>
+ </HEAD>
+ <BODY ng-app="myApp" ng-controller="myCtl"> 
+	<H1>$log  Service</H1> 
+	<H2>See Browser's Console</H2>
+ </BODY>
+</HTML>

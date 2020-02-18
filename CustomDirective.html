@@ -1,0 +1,77 @@
+<!--Program contains if-els, for, while, do-while control statement examples  -->
+<HTML>
+<HEAD>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script >
+	var app = angular.module('myApp', []);
+
+	app.directive('myPerson', function() {
+	    return {
+			restrict:'EACM', //Directive accessed by all 4 types
+			template:'<b>{{person.name}}</b>:{{person.address}}',
+		};
+	});
+
+	app.directive('myStudent', function() {
+	    return {
+			restrict:'E',// accessed by <my-student> element
+			scope:{// Define local reference 'std' of $scope attribute
+			  std: '=name'
+			},
+			template:'<b>{{std.name}}</b>:{{std.address}}'
+		};
+	});
+
+	app.directive('myAdd', function() {
+		var linkFunc = function(scope,element,attrs){
+			element.on('change',function(event){ //listen onChange event
+				scope.$apply(function(){
+				   scope[attrs.myAdd] += parseInt(element[0].value);
+				});
+            });
+		}
+		return {
+			restrict:'A',
+			link:linkFunc
+		};
+	});
+	
+	app.controller('myCtl',function($scope){
+		$scope.person = {name:"Ram", address:"Mumbai"};
+		$scope.ajay = { name: 'Ajay', address: 'Delhi' };
+		$scope.vijay = { name: 'Vijay', address: 'Pune' };
+		$scope.balance = 0;
+	});
+
+</script>
+</HEAD>
+
+<BODY ng-app="myApp" ng-controller="myCtl" >
+
+	<H1>Custom Directive</H1>
+
+	<!--Accessing myPerson directive by 4 typs-->
+	<p><my-person/></p>
+	<p my-person="10"></p>
+	<p class="my-person"></p>
+	<p><!-- directive: my-person exp  --></p>
+	
+	<hr>
+	<!--Access $scope.ajay and $scope.vijay using local reference-->
+	<p><my-student name="ajay"></p>
+	<p><my-student name="vijay"></p>
+	<hr>
+
+	<!--Listen on change event using link function -->
+	Enter amount <input type="text" my-add="balance" >
+	Balance {{balance}}
+	<hr>
+	{{person}}<br>
+	{{person.name}}<br>
+	{{person["name"]}}
+
+
+</BODY>
+</HTML>

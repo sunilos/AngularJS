@@ -1,0 +1,88 @@
+<!--Program contains if-els, for, while, do-while control statement examples  -->
+<HTML>
+<HEAD>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script >
+	var app = angular.module('myApp', []);
+
+	var ctlObj=	function($scope){
+
+		$scope.price = 0;
+		$scope.message = "";
+		$scope.numbers = "1,2";
+		$scope.total = 0;
+		$scope.array = [];
+		
+		$scope.forLoop = function(){
+			var numArray = $scope.numbers.split(",");
+			$scope.total = 0;
+			for(i=0 ; i< numArray.length; i++){
+			  $scope.total += parseInt(numArray[i]);  
+			}
+		}
+
+
+		$scope.forEachLoop = function(){
+			$scope.total = 0;
+			var numArray = $scope.numbers.split(",");
+			numArray.forEach(function(ele){
+			  $scope.total += parseInt(ele);
+			});
+		}
+
+
+		$scope.whileLoop = function(){
+			var numArray = $scope.numbers.split(",");
+			$scope.total = 0;
+			var i =0 ;
+			while(i< numArray.length){
+			  $scope.total += parseInt(numArray[i]);  
+			  i++;
+			}
+		}
+
+		$scope.doWhileLoop = function(){
+			var numArray = $scope.numbers.split(",");
+			$scope.total = 0;
+			var i =0 ;
+			do{
+			  $scope.total += parseInt(numArray[i]);  
+			  i++;
+			}while(i< numArray.length)
+		}
+		
+		
+		$scope.buy = function(){
+		    if($scope.price>=100){
+				$scope.message ="You can buy Pizza";
+			}else{
+				$scope.message ="You can not buy Pizza";
+			}
+		}
+	}
+	app.controller('myCtl',ctlObj);
+
+</script>
+</HEAD>
+
+<BODY ng-app="myApp" ng-controller="myCtl" >
+
+	<H1>Control Statements</H1> 
+	<H2>if-else condition</H2>
+	
+	<input type="number" ng-model='price' > 
+	<button ng-click="buy()">Buy Pizza</button> 
+	<h4>{{message}}</h4>
+
+	<hr>
+	<H2>Loops</H2>
+	<H4>Enter comma seperated numbers and click on button to sum them</H4>
+	<input type="text" ng-model='numbers' > = {{total}} <br>
+	<button ng-click="forLoop()">For Calculate</button> 
+	<button ng-click="forEachLoop()">For EachCalculate</button> 
+	<button ng-click="whileLoop()">While Calculate</button> 
+	<button ng-click="doWhileLoop()">Do While Calculate</button> 
+</BODY>
+</HTML>

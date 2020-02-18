@@ -1,0 +1,13 @@
+<!--App will display Welcome message to entered name -->
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<body>
+	<div ng-app="" >
+	  <p>Name : <input type="text" ng-model="name"></p> 
+	  <hr>
+	  <h1>Welcome {{name}}</h1>
+	  <hr>
+	  <H2>Welcome <span ng-bind='name' /></H2>
+	</div>
+</body>
+</html> 

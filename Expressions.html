@@ -1,0 +1,27 @@
+<!--
+Using Angular JS expression it calculates interest amount  
+Expression can be written in style. 
+Example changes bg color of text box when you select color from dropdwon.
+-->
+<html lang="en-US">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body ng-app=""  ng-init="principal=10000;rate=7;years=2" >
+	<div >
+	  <p>Loan Amount {{principal}}</p>
+	  <p>Interest Rate {{rate}}</p>
+	  <p>Years {{years}}</p>
+	  <p>Total Interest {{principal*rate/100*years}}</p>
+	  <p>Total Interest <span ng-bind="principal*rate/100*years"></span></p>
+	</div>
+	<div>
+	 <b>Select Color and see text box</b> <select ng-model="bgcolor">
+		<option>red</option>
+		<option>green</option>
+		<option>blue</option>
+	 </select>
+	 <input style="background-color:{{bgcolor}}" value="{{bgcolor}}">	
+	</div>
+</body>
+</html> 

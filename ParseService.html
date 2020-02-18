@@ -1,0 +1,49 @@
+<HTML>
+
+<HEAD>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+	<script>
+		var app = angular.module('myApp', []);
+
+		var ctlObj = function ($scope, $parse) {
+
+			var global = { user: { name: 'Global' } };
+			var local = { user: { name: 'Local' } };
+			$scope.scp = { user: { name: 'Scope' } };
+
+			//Get the value 
+			var getter = $parse('user.name');
+			//Set the value
+			var setter = getter.assign;
+
+			//Get values
+			$scope.gval = getter(global);
+			$scope.lval = getter(local);
+			$scope.sval = $parse('user.name')($scope.scp);
+
+			$scope.changeValue = function () {
+
+				setter(global, 'New Global Value');
+				setter(local, 'New Local Value');
+				setter($scope.scp, 'New Scope Value');
+
+				$scope.gval = getter(global);
+				$scope.lval = getter(local);
+				$scope.sval = getter($scope.scp);
+
+			}
+		}
+		app.controller('parseCtl', ctlObj);
+
+	</script>
+</HEAD>
+
+<BODY ng-app="myApp" ng-controller="parseCtl">
+	<H1>$Parse Service</H1>
+	Global user.name : {{gval}}<br> Local user.name : {{lval}}<br> $scope user.name : {{sval}}<br>
+	<button ng-click="changeValue()">Change Value </button>
+</BODY>
+
+</HTML>

@@ -1,0 +1,93 @@
+<!--
+This page handles different events.
+
+Example of 
+ng-click
+ng-change
+ng-mousemove
+ng-mouseenter
+ng-mouseleave
+
+-->
+
+<html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script>
+	var app = angular.module('myApp', []);
+
+	//Callback function 
+	var clickCallback=	function($scope){
+		$scope.count = 0;
+		$scope.increaseCount= function() {
+			$scope.count++;
+		};
+	}
+	app.controller('clickCtl',clickCallback);
+
+	var changeCallback = function($scope) {
+		$scope.n1= 5;
+		$scope.n2= 10;
+		$scope.total= 0;
+		$scope.calculate= function (){
+			$scope.total = parseInt($scope.n1) + parseInt($scope.n2);
+		}
+	}
+	app.controller('changeCtl',changeCallback);
+
+	var mouseCallback = function($scope) {
+		$scope.message= "";
+		$scope.x= 0;
+		$scope.y= 0;
+		$scope.moveMouse= function (e){
+		    //$event is JavaScript event object
+			$scope.x= e.clientX;
+			$scope.y= e.clientY;
+		};
+		$scope.enterMouse= function (){
+			$scope.message= "Mouse Entered";
+		};
+		$scope.leaveMouse= function (){
+			$scope.message= "Mouse Exited ";
+		};
+	}
+	app.controller('mouseCtl',mouseCallback);
+
+	function htmlClick(){
+		alert('Angular, you can not override JC event');
+	}
+
+</script>
+
+<body ng-app="myApp"  >
+	<div ng-controller="clickCtl" >
+		<h1>ng-click Event</h1>
+		<h2>Counter : {{count}} </h2> 
+		<input type="button" ng-click='increaseCount()' onClick='htmlClick()' value="Click me and increase count"> 
+	</div>
+
+	<hr>
+	<div ng-controller="changeCtl" >
+		<h1>ng-change Event</h1>
+   		<h2>Change value and see sum</h2>
+
+		<H3>
+		  Num #1: <input type="text" ng-model="n1" ng-change="calculate()"> 
+		  + 
+		  Num #2 : <input type="text" ng-model="n2" ng-change="calculate()" > 
+		  = {{total}} </span> <BR>
+		<h3>
+	</div>
+	<hr>
+	<div ng-controller="mouseCtl" >
+		<h1>Mouse Events: Move, Enter, and Exit</h1>
+		<h2 ng-mousemove="moveMouse($event)"  ng-mouseenter="enterMouse()"  ng-mouseleave="leaveMouse()">
+		 This is Rays technologies, move your mouse here and see coordinates
+		</h2>
+		<h3> Mouse Coordinates: {{x + ', ' + y}}</h3>
+		<h3> {{message}}</h3>
+
+	</div>
+ </body>
+</html> 

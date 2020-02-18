@@ -1,0 +1,30 @@
+<!--App will display Welcome message to entered name -->
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script >
+	var app = angular.module('myApp', []);
+	var ctlObj=	function($scope,$http){
+		$scope.message = "";
+		$scope.data = {};
+		$scope.submit = function() {
+			//$scope.data = {code:"01", name:"ram"};
+			$http.get("http://localhost:8080/User")
+			.then(function(response) {
+				$scope.data = response;
+			});
+		};
+	}
+	app.controller('myCtl',ctlObj);
+</script>
+</head>
+<body>
+    <H1>Http</H1>
+	<div ng-app="myApp" ng-controller="myCtl" >
+	  <p>{{data}}</p> 
+	  <button ng-click="submit()" >Get Data</button>
+	</div>
+</body>
+</html> 

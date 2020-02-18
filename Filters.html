@@ -1,0 +1,133 @@
+<!--
+Example of filter of decorate data like uppercase/lowercase
+Example of filter array data in ng-repeat
+Example of filter array objects in ng-repeat using single property
+Example of order array on object attribute
+Example of creating custom filters 
+
+-->
+<html >
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script >
+	var app = angular.module('myApp', []);
+
+	app.filter('rs', function() {
+	  return function(c) {
+	    return 'Rs:' +  c;  
+	  };
+	});	
+	
+	var ctlObj=	function($scope){
+		$scope.name='Ram';
+		$scope.age=16;
+		$scope.price=99.99;
+		$scope.cities=['Mumbai','Delhi','Indore','Bhopal'];
+		$scope.person=[
+					{name:'Ram',age:16},
+					{name:'Shyam',age:17},
+					{name:'Amit',age:18},
+					{name:'Sumit',age:18}
+				];
+
+		$scope.cityList=[
+					{name:'Indore',code:'IND', state:'MP'},
+					{name:'Bhopal',code:'BHO',state:'MP' },
+					{name:'Mumbai',code:'BOM',state:'MH' },
+					{name:'Pune',code:'PNQ',state:'MH' },
+					{name:'Delhi',code:'DEL',state:'DL'}
+				];
+
+		$scope.stateList=[
+					{name:'Maharstra',code:'MH'},
+					{name:'Madhya Pradesh',code:'MP'},
+					{name:'Delhi',code:'DL' }
+				];
+		$scope.metroCity = 	function(c) {
+			if(c.state == 'MH' | c.state == 'DL'){
+			   return c;
+			}
+		};
+	}
+	app.controller('myCtl',ctlObj);
+
+</script>
+
+
+<body>
+
+	<div ng-app="myApp" ng-controller="myCtl" >
+	  
+	  <H1>Filters</H1>
+
+	  <H2>Format values</H2>
+	  Name : {{name}} <br>
+	  Name in upper : {{name|uppercase}}<br>
+	  Name in Lower : {{name|lowercase}}<br>
+	  Price: {{price}}<br>
+	  Price: {{price|currency}}<br>
+	  Price: {{price|rs}}<br>
+	  
+	  <HR>
+	  <H2>Filter on a table</H2>
+	  Enter text:<input type="text" ng-model="per">
+	  <BR>
+	  <Table border=1>
+	    <tr><th>Name</th><th>Age</th><tr>
+	    <tr ng-repeat="p in person | filter: per">
+			<td>{{p.name}}</td><td>{{p.age}}</td>
+		<tr>
+	  </Table>
+
+	  <HR>
+	  
+	  <h1>Filter a List (dropdown)</h1>	  
+	  <B>State:</B>  {{state}}
+	  <select ng-model="st"  > 
+	   <option>--select--</option> 
+	   <option ng-repeat="s in stateList" value="{{s.code}}" >{{s.name}}</option>
+	  </select>
+	  <br>
+	  <b>City:</b> {{myCity}} 
+		<select ng-model="myCity"  > 
+			<option 
+				ng-repeat="c in cityList | filter:{state: st} " 
+				value="{{c.code}}" >
+				{{c.name}}
+			</option>
+		</select>
+	  <br>				 
+	  <HR>
+	  <b>Metro City:</b> 
+		<select ng-model="mCity"  > 
+			<option 
+				ng-repeat="c in cityList | filter:metroCity " 
+				value="{{c.code}}" >
+				{{c.name}}
+			</option>
+		</select>
+
+	  <HR>
+
+	  <H1>Order your data</H1>
+
+	  Order By 
+	  <select ng-model="column">
+		<option value="name" >name</option>
+		<option value="age">age</option>
+	  </select>
+	  <ol>
+		  <li ng-repeat="p in person | orderBy:column " >{{p.name}} ({{p.age}}) </li>
+	  </ol>
+
+	  <ol>
+		  <li ng-repeat="c in cityList | orderBy:'name' " >{{c.name}}</li>
+	  </ol>
+
+	  
+	  <HR>
+	
+	</div>
+
+</body>
+</html> 
