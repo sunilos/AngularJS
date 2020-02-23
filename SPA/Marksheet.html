@@ -1,0 +1,38 @@
+<H1>Marksheet</H1>
+
+<p ng-show="success" style="color:green">{{message}}</p>
+<p ng-hide="success" style="color:red">{{message}}</p>
+
+<form>
+	<table>
+		<tr>
+			<td>Roll No {{id}}</td>
+			<td><input ng-model="form.rollNo" name="rollNo" type="text"></td>
+		</tr>
+		<tr>
+			<td>Name</td>
+			<td><input ng-model="form.name" name="name" type="text"> </td>
+		</tr>
+		<tr>
+			<td>physics</td>
+			<td><input ng-model="form.physics" name="physics" type="text"> </td>
+		</tr>
+		<tr>
+			<td>chemistry</td>
+			<td><input ng-model="form.chemistry" name="chemistry" type="text"> </td>
+		</tr>
+		<tr>
+			<td>maths</td>
+			<td><input ng-model="form.maths" name="maths" type="text"> </td>
+		</tr>
+		<tr>
+			<td>Student ID</td>
+			<td><input ng-model="form.studentId" name="maths" type="text"> </td>
+		</tr>
+		<tr>
+			<td><button ng-click="submit()">Save</button></td>
+			<td><button ng-click="search()">Search</button></td>
+		</tr>
+	</table>
+</form>
+

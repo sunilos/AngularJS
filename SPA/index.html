@@ -1,0 +1,25 @@
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+	<script src="app.js"></script>
+</head>
+
+<body ng-app="sosApp">
+	<div>
+		<a href="#">Home</a> |
+		<a href="#!customer">Customer</a> |
+		<a href="#!account">Account</a> |
+		<a href="#!loan/9">Loan</a> |
+		<a href="#!marksheet/0">Marskheet</a> |
+		<a href="#!marksheetList">Marskheet List</a> |
+
+	</div>
+	<hr>
+	<div ng-view></div>
+	<hr>
+	<div>Copyright (c) Rays (SunilOS) Technologies</div>
+</body>
+
+</html>

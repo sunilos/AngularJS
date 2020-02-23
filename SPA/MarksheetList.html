@@ -1,0 +1,36 @@
+<H1> Marksheet List </H1>
+
+<p style="color:red" ng-bind="message"></p>
+
+<table>
+    <tr>
+        <td>Roll No</td>
+        <td><input ng-model="searchForm.rollNo" name="rollNo" type="text"></td>
+        <td>Name</td>
+        <td><input ng-model="searchForm.name" name="name" type="text"> </td>
+        <td><button ng-click="search()">Search</button></td>
+    </tr>
+</table>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Roll NO</th>
+        <th>Name</th>
+        <th>Physics</th>
+        <th>Chemistry</th>
+        <th>Maths</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr ng-repeat="e in list">
+        <td>{{e.id}}</td>
+        <td>{{e.rollNo}}</td>
+        <td>{{e.name}}</td>
+        <td>{{e.physics}}</td>
+        <td>{{e.chemistry}}</td>
+        <td>{{e.maths}}</td>
+        <td><button ng-click="edit(e.id)">Edit</button></td>
+        <td><button ng-click="delete(e.id)">Delete</button></td>
+    </tr>
+</table>
